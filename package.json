@@ -1,0 +1,36 @@
+{
+  "name": "ex-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "push": "git add . && git commit && git push origin main",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/cors": "^2.8.14",
+    "@types/express": "^4.17.18",
+    "@types/express-session": "^1.17.8",
+    "@types/jsonwebtoken": "^9.0.3",
+    "chalk": "^4.1.2",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.9",
+    "env-tracking": "^1.1.2",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.2",
+    "privy-validator": "^1.0.5",
+    "simple-aes-crypto": "^2.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.2",
+    "copyfiles": "^2.4.1",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^5.0.5",
+    "typeorm": "^0.3.17"
+  }
+}
