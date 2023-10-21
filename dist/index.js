@@ -17,13 +17,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseController = exports.Router = exports.Application = void 0;
+exports.BaseController = exports.Router = exports.Validator = exports.Application = void 0;
 const App_1 = __importDefault(require("./app/class/App"));
 exports.Application = App_1.default;
 const Controller_1 = __importDefault(require("./app/class/Controller"));
 exports.BaseController = Controller_1.default;
 const Route_1 = __importDefault(require("./app/Route"));
 exports.Router = Route_1.default;
+const privy_validator_1 = __importDefault(require("privy-validator"));
+exports.Validator = privy_validator_1.default;
 __exportStar(require("./app/App"), exports);
 __exportStar(require("./app/Exception"), exports);
 __exportStar(require("./app/Error"), exports);

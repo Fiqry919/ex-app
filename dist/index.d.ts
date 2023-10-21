@@ -1,6 +1,7 @@
 import Application from './app/class/App';
 import BaseController from './app/class/Controller';
 import Router from './app/Route';
+import Validator from 'privy-validator';
 export * from './app/App';
 export * from './app/Exception';
 export * from './app/Error';
@@ -22,6 +23,10 @@ export {
  *
  */
 Application, 
+/**
+ *
+ */
+Validator, 
 /**
  *
  */

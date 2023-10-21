@@ -37,8 +37,7 @@ class Application {
             this.useEngine(process.cwd());
             if ((_c = this.options) === null || _c === void 0 ? void 0 : _c.providers)
                 (_d = this.options) === null || _d === void 0 ? void 0 : _d.providers.forEach(item => app.use(item));
-            this.router.forEach(item => app.use(item));
-            app.use(Error_1.ErrorHandler);
+            app.use(this.router).use(Error_1.ErrorHandler);
             console.clear();
         }
         catch (e) {
