@@ -3,6 +3,7 @@ import { Encode } from "./interfaces/Response";
 import { Exception, HttpStatus } from "./Exception";
 import { NextFunction, Request, Response } from "express";
 import { AuthCallback, TypeConstructor } from "./interfaces/App";
+export { isEmail } from "privy-validator/dist/common/validator";
 /**
  * Getting value from .env
  * @param key environment keys

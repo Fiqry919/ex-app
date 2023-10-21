@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.writeLog = exports.random = exports.hash_check = exports.hash = exports.Authenticate = exports.generate = exports.decrypt = exports.encrypt = exports.aes = exports.error = exports.view = exports.json = exports.env = void 0;
+exports.writeLog = exports.random = exports.hash_check = exports.hash = exports.Authenticate = exports.generate = exports.decrypt = exports.encrypt = exports.aes = exports.error = exports.view = exports.json = exports.env = exports.isEmail = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const env_tracking_1 = __importDefault(require("env-tracking"));
@@ -21,6 +21,8 @@ const simple_aes_crypto_1 = __importDefault(require("simple-aes-crypto"));
 const Response_1 = require("./Response");
 const crypto_1 = require("crypto");
 const Exception_1 = require("./Exception");
+var validator_1 = require("privy-validator/dist/common/validator");
+Object.defineProperty(exports, "isEmail", { enumerable: true, get: function () { return validator_1.isEmail; } });
 /**
  * Getting value from .env
  * @param key environment keys
