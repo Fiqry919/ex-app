@@ -1,4 +1,5 @@
 import { UnitDate } from "./interfaces/Compiler";
+import { CustomMessage, ValidationSchema } from "privy-validator/dist/interfaces/validator";
 declare global {
     interface String {
         /**
@@ -31,6 +32,10 @@ declare module 'express' {
          * Getting request body or if empty request query
          */
         data?: () => any;
+        /**
+         * validate request body or query
+         */
+        validate?: (schema: ValidationSchema, message?: CustomMessage) => Promise<any>;
     }
 }
 /**

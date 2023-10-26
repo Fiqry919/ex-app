@@ -40,7 +40,7 @@ exports.json = json;
  * Render view
  */
 const view = (page, compact, code = Exception_1.HttpStatus.OK) => {
-    return (res) => {
+    return (_, res) => {
         try {
             return res.status(code).render(page, compact);
         }
@@ -55,7 +55,7 @@ exports.view = view;
  * Render view or catch json
  */
 const error = (exception) => {
-    return (res) => {
+    return (_, res) => {
         try { // add extension '.ejs' for force render
             return res.status(exception.code).render(path_1.default.join(__dirname, `../views/error`), exception);
         }
@@ -102,6 +102,7 @@ const Authenticate = (callback) => {
             const payload = jsonwebtoken_1.default.verify(header.split(" ")[1], (0, exports.env)("APP_KEY"), (e, payload) => {
                 if (e)
                     throw new Exception_1.Exception(e.message.replace("jwt", "session").capitalize(), code);
+                delete payload.iat;
                 return payload;
             });
             req.user = payload;

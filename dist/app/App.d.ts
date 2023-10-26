@@ -18,11 +18,11 @@ export declare const json: (res: Response, data: Encode, encrypt?: boolean) => R
 /**
  * Render view
  */
-export declare const view: (page: string, compact?: any, code?: HttpStatus) => (res: Response) => void | Response<any, Record<string, any>>;
+export declare const view: (page: string, compact?: any, code?: HttpStatus) => (_: Request, res: Response) => void | Response<any, Record<string, any>>;
 /**
  * Render view or catch json
  */
-export declare const error: (exception: Exception) => (res: Response) => void | Response<any, Record<string, any>>;
+export declare const error: (exception: Exception) => (_: Request, res: Response) => void | Response<any, Record<string, any>>;
 /**
  * Instance aes
  */
