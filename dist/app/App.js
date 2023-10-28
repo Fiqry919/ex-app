@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.writeLog = exports.random = exports.hash_check = exports.hash = exports.Authenticate = exports.generate = exports.decrypt = exports.encrypt = exports.aes = exports.error = exports.view = exports.json = exports.env = exports.isEmail = void 0;
+exports.writeLog = exports.random = exports.hash_check = exports.hash = exports.Authenticate = exports.sleep = exports.generate = exports.decrypt = exports.encrypt = exports.aes = exports.error = exports.view = exports.json = exports.asset = exports.dir = exports.env = exports.isEmail = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const env_tracking_1 = __importDefault(require("env-tracking"));
@@ -21,6 +21,7 @@ const simple_aes_crypto_1 = __importDefault(require("simple-aes-crypto"));
 const Response_1 = require("./Response");
 const crypto_1 = require("crypto");
 const Exception_1 = require("./Exception");
+const App_1 = require("./interfaces/App");
 var validator_1 = require("privy-validator/dist/common/validator");
 Object.defineProperty(exports, "isEmail", { enumerable: true, get: function () { return validator_1.isEmail; } });
 /**
@@ -30,6 +31,22 @@ Object.defineProperty(exports, "isEmail", { enumerable: true, get: function () {
  */
 const env = (key) => env_tracking_1.default.get(key);
 exports.env = env;
+/**
+ * Read public directory
+ * @returns string
+ */
+const dir = (dir, fullDir) => fs_1.default
+    .readdirSync(path_1.default.join(process.cwd(), `${App_1.AppConfig.serveStatic}/${dir}`), { withFileTypes: true })
+    .map((v) => fullDir ? path_1.default.join(v.path, v.name) : path_1.default.join(dir, v.name));
+exports.dir = dir;
+/**
+ * Read file in public directory
+ * @param path
+ */
+const asset = (file, encoding) => encoding
+    ? fs_1.default.readFileSync(path_1.default.join(process.cwd(), `${App_1.AppConfig.serveStatic}/${file}`), encoding)
+    : fs_1.default.readFileSync(path_1.default.join(process.cwd(), `${App_1.AppConfig.serveStatic}/${file}`));
+exports.asset = asset;
 /**
  * Instance response JSON
  * @returns Response
@@ -90,6 +107,11 @@ exports.decrypt = decrypt;
 const generate = (payload, expiresIn) => jsonwebtoken_1.default.sign(payload, (0, exports.env)("APP_KEY"), expiresIn ? { expiresIn } : {});
 exports.generate = generate;
 /**
+ * Delay execute time
+ */
+const sleep = (second) => __awaiter(void 0, void 0, void 0, function* () { return yield new Promise(f => setTimeout(f, (second * 1000))); });
+exports.sleep = sleep;
+/**
  * Authenticate strategy
  */
 const Authenticate = (callback) => {
@@ -148,7 +170,7 @@ const random = (length, type = Buffer) => {
     let result = '';
     for (let i = 0; i < size; i++)
         result += characters.charAt(Math.floor(Math.random() * characters.length));
-    return type === String ? result : type === Number ? Number(result) : Buffer.from(result).toString('hex');
+    return type === String ? result : type === Number ? parseInt(result) : Buffer.from(result).toString('hex');
 };
 exports.random = random;
 /**

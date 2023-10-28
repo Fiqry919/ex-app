@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import Encryption from "simple-aes-crypto";
 import { Encode } from "./interfaces/Response";
 import { Exception, HttpStatus } from "./Exception";
@@ -10,6 +11,16 @@ export { isEmail } from "privy-validator/dist/common/validator";
  * @returns string
  */
 export declare const env: (key: string) => any;
+/**
+ * Read public directory
+ * @returns string
+ */
+export declare const dir: (dir?: string, fullDir?: boolean) => string[];
+/**
+ * Read file in public directory
+ * @param path
+ */
+export declare const asset: (file: string, encoding?: BufferEncoding) => string | Buffer;
 /**
  * Instance response JSON
  * @returns Response
@@ -42,6 +53,10 @@ export declare const decrypt: (encrypted: string) => any;
  * @returns string
  */
 export declare const generate: (payload: any, expiresIn?: string | number) => string;
+/**
+ * Delay execute time
+ */
+export declare const sleep: (second: number) => Promise<unknown>;
 /**
  * Authenticate strategy
  */

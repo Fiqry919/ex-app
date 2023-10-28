@@ -17,6 +17,7 @@ const cors_1 = __importDefault(require("cors"));
 const chalk_1 = __importDefault(require("chalk"));
 const path_1 = __importDefault(require("path"));
 const express_session_1 = __importDefault(require("express-session"));
+const App_1 = require("../interfaces/App");
 const Error_1 = require("../Error");
 const express_1 = __importDefault(require("express"));
 class Application {
@@ -29,14 +30,16 @@ class Application {
      * Initialize application
      */
     init() {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         try {
             const app = this.app = (0, express_1.default)();
             app.use((0, express_session_1.default)(((_a = this.options) === null || _a === void 0 ? void 0 : _a.session) || { secret: 'SessionSecret', resave: true, saveUninitialized: true }));
             app.use((0, cors_1.default)(((_b = this.options) === null || _b === void 0 ? void 0 : _b.cors) || { credentials: true, origin: '*' })).use(express_1.default.urlencoded({ extended: true })).use(express_1.default.json());
             this.useEngine(process.cwd());
-            if ((_c = this.options) === null || _c === void 0 ? void 0 : _c.providers)
-                (_d = this.options) === null || _d === void 0 ? void 0 : _d.providers.forEach(item => app.use(item));
+            if ((_c = this.options) === null || _c === void 0 ? void 0 : _c.mail)
+                App_1.AppConfig.mail = this.options.mail;
+            if ((_d = this.options) === null || _d === void 0 ? void 0 : _d.providers)
+                (_e = this.options) === null || _e === void 0 ? void 0 : _e.providers.forEach(item => app.use(item));
             app.use(this.router).use(Error_1.ErrorHandler);
             console.clear();
         }
@@ -65,20 +68,15 @@ class Application {
     }
     useEngine(directory) {
         var _a, _b;
-        const env = process.env.NODE_ENV;
         const viewEngine = (_a = this.options) === null || _a === void 0 ? void 0 : _a.viewEngine;
         const serveStatic = (_b = this.options) === null || _b === void 0 ? void 0 : _b.serveStatic;
-        if (env === 'production') {
-            if (viewEngine)
-                this.app.set('view engine', 'ejs').set('views', path_1.default.join(directory, typeof viewEngine === 'string' ? viewEngine : 'dist/views'));
-            if (serveStatic)
-                this.app.use('/public', express_1.default.static(path_1.default.join(directory, typeof serveStatic === 'string' ? serveStatic : 'dist/public')));
+        if (viewEngine) {
+            const configEngine = typeof viewEngine === 'string' ? App_1.AppConfig.viewEngine = viewEngine : 'res/views';
+            this.app.set('view engine', 'ejs').set('views', path_1.default.join(directory, configEngine));
         }
-        if (env === 'development') {
-            if (viewEngine)
-                this.app.set('view engine', 'ejs').set('views', path_1.default.join(directory, typeof viewEngine === 'string' ? viewEngine : 'src/views'));
-            if (serveStatic)
-                this.app.use('/public', express_1.default.static(path_1.default.join(directory, typeof serveStatic === 'string' ? serveStatic : 'src/public')));
+        if (serveStatic) {
+            const configStatic = typeof serveStatic === 'string' ? App_1.AppConfig.serveStatic = serveStatic : 'res/public';
+            this.app.use('/public', express_1.default.static(path_1.default.join(directory, configStatic)));
         }
     }
 }

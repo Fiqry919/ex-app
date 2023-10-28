@@ -1,5 +1,7 @@
 import Application from './app/class/App';
 import BaseController from './app/class/Controller';
+import Hash from './app/class/Hash';
+import Mail from './app/class/Mail';
 import Router from './app/Route';
 import Validator from 'privy-validator';
 export * from './app/App';
@@ -8,6 +10,7 @@ export * from './app/Error';
 export * from './app/Response';
 export * from './app/interfaces/App';
 export * from './app/interfaces/HttpStatus';
+export * from './app/interfaces/Mail';
 export * from './app/interfaces/Response';
 export * from './app/interfaces/Route';
 /**
@@ -23,6 +26,14 @@ export {
  *
  */
 Application, 
+/**
+ *
+ */
+Hash, 
+/**
+ *
+ */
+Mail, 
 /**
  *
  */

@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 import { CorsOptions } from "cors";
 import { SessionOptions } from "express-session";
 import { DataSource } from "typeorm";
@@ -21,17 +22,25 @@ export interface AppOptions {
     session?: SessionOptions;
     /**
      * Allow serve-static for upload file.
-     * by default is false, and directory default is `./src/public`
+     * by default is false, and directory default is `./res/public`
      * or can fill this with custom directory.
      */
     serveStatic?: boolean | string;
     /**
      * Allow render view for return view, engine use is `ejs`.
-     * by default is false, and directory default is `./src/views`
+     * by default is false, and directory default is `./res/views`
      * or can fill this with custom directory.
      */
     viewEngine?: boolean | string;
+    /**
+     *
+     */
+    mail?: SMTPOptions;
 }
+/**
+ * mail options
+ */
+export type SMTPOptions = SMTPTransport | SMTPTransport.Options;
 /**
  * instance constructor type
  */
@@ -84,3 +93,4 @@ export interface NextError {
      */
     code?: number;
 }
+export declare const AppConfig: AppOptions;
