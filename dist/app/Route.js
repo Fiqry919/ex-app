@@ -31,7 +31,7 @@ function Router(op) {
         if (!Array.isArray(op.group))
             throw TypeError("Invalid argument of route group");
         if (op.middleware)
-            router.use(op.middleware); /** middleware */
+            router.use(op.prefix, op.middleware); /** middleware group */
         for (let i = 0; i < op.group.length; i++) {
             const route = op.group[i];
             const path = op.prefix ? op.prefix + route.path : route.path;
