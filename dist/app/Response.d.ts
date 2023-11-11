@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { Decode, Encode } from "./interfaces/Response";
+import { Decode, Encode, CustomCipher } from "./interfaces/Response";
 /**
  * parse format response
  */
@@ -34,7 +34,8 @@ export declare const decode: (object: Decode<any>, _encryption?: boolean) => any
  */
 export declare class EncoderJSON<T> {
     private defaultFormat;
-    constructor(defaultFormat: T);
+    private options?;
+    constructor(defaultFormat: T, options?: CustomCipher<T>);
     private parse;
     encode: (object: T, encryption?: boolean) => T | {
         data: string;

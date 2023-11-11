@@ -67,7 +67,7 @@ class Mail {
                         cb(null, info);
                 }
                 catch (e) {
-                    if (e)
+                    if (cb)
                         cb(e);
                 }
             }

@@ -35,17 +35,15 @@ exports.env = env;
  * Read public directory
  * @returns string
  */
-const dir = (dir, fullDir) => fs_1.default
+const dir = (dir, rootDir) => fs_1.default
     .readdirSync(path_1.default.join(process.cwd(), `${App_1.AppConfig.serveStatic}/${dir}`), { withFileTypes: true })
-    .map((v) => fullDir ? path_1.default.join(v.path, v.name) : path_1.default.join(dir, v.name));
+    .map((v) => rootDir ? path_1.default.join(v.path, v.name) : path_1.default.join(dir, v.name));
 exports.dir = dir;
 /**
  * Read file in public directory
- * @param path
+ * @param file
  */
-const asset = (file, encoding) => encoding
-    ? fs_1.default.readFileSync(path_1.default.join(process.cwd(), `${App_1.AppConfig.serveStatic}/${file}`), encoding)
-    : fs_1.default.readFileSync(path_1.default.join(process.cwd(), `${App_1.AppConfig.serveStatic}/${file}`));
+const asset = (file, encoding) => fs_1.default.readFileSync(path_1.default.join(process.cwd(), `${App_1.AppConfig.serveStatic}/${file}`), encoding);
 exports.asset = asset;
 /**
  * Instance response JSON

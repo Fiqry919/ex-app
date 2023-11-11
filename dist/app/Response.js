@@ -28,8 +28,9 @@ exports.decode = decode;
  * custom response json encoder
  */
 class EncoderJSON {
-    constructor(defaultFormat) {
+    constructor(defaultFormat, options) {
         this.defaultFormat = defaultFormat;
+        this.options = options;
         this.parse = (object) => {
             for (const [k, v] of Object.entries(this.defaultFormat)) {
                 if (typeof v === 'object' && !Array.isArray(v))
@@ -37,8 +38,18 @@ class EncoderJSON {
             }
             return Object.assign(Object.assign({}, this.defaultFormat), object);
         };
-        this.encode = (object, encryption = true) => (0, App_1.env)("APP_ENCRYPTION") === 'true' && encryption ? { data: (0, App_1.encrypt)(this.parse(object)) } : this.parse(object);
-        this.decode = (object, encryption = true) => (0, App_1.env)("APP_ENCRYPTION") === 'true' && encryption && object.data ? (0, App_1.decrypt)(object.data) : object;
+        this.encode = (object, encryption = true) => {
+            var _a;
+            return (0, App_1.env)("APP_ENCRYPTION") === 'true' && encryption
+                ? { data: ((_a = this.options) === null || _a === void 0 ? void 0 : _a.encrypt) ? this.options.encrypt(this.parse(object)) : (0, App_1.encrypt)(this.parse(object)) }
+                : this.parse(object);
+        };
+        this.decode = (object, encryption = true) => {
+            var _a;
+            return (0, App_1.env)("APP_ENCRYPTION") === 'true' && encryption && object.data
+                ? (((_a = this.options) === null || _a === void 0 ? void 0 : _a.decrypt) ? this.options.decrypt(object.data) : (0, App_1.decrypt)(object.data))
+                : object;
+        };
     }
 }
 exports.EncoderJSON = EncoderJSON;

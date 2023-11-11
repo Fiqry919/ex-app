@@ -28,6 +28,13 @@ export interface Encode {
     result?: any;
 }
 /**
+ * custom encryption
+ */
+export interface CustomCipher<T> {
+    encrypt: (object: T) => string;
+    decrypt: (object: any) => any;
+}
+/**
  * instanceOf Encode
  */
 export declare const Encode: (target: any) => target is Encode;

@@ -15,12 +15,12 @@ export declare const env: (key: string) => any;
  * Read public directory
  * @returns string
  */
-export declare const dir: (dir?: string, fullDir?: boolean) => string[];
+export declare const dir: (dir?: string, rootDir?: boolean) => string[];
 /**
  * Read file in public directory
- * @param path
+ * @param file
  */
-export declare const asset: (file: string, encoding?: BufferEncoding) => string | Buffer;
+export declare const asset: (file: string, encoding?: BufferEncoding) => string;
 /**
  * Instance response JSON
  * @returns Response

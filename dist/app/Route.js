@@ -30,14 +30,14 @@ function Router(op) {
     else {
         if (!Array.isArray(op.group))
             throw TypeError("Invalid argument of route group");
-        if (op.middleware)
-            router.use(op.prefix, op.middleware); /** middleware group */
         for (let i = 0; i < op.group.length; i++) {
             const route = op.group[i];
             const path = op.prefix ? op.prefix + route.path : route.path;
             const identity = `[${route.method.toUpperCase()}]:${path}`;
             if (Route_1.RouteFilter.includes(identity))
                 (0, Route_1.RouteDuplicate)(identity);
+            if (op.middleware)
+                router.use(path, op.middleware); /** middleware group */
             Route_1.RouteFilter.push(identity);
             router[route.method](path, route.middleware || [], route.handler);
         }
