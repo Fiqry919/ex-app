@@ -22,7 +22,9 @@ exports.encode = encode;
  * response decoder.
  * auto detect encryption.
  */
-const decode = (object, _encryption = true) => (0, App_1.env)("APP_ENCRYPTION") === 'true' && _encryption && object.data ? (0, App_1.decrypt)(object.data) : object;
+const decode = (object, _encryption = true) => (0, App_1.env)("APP_ENCRYPTION") === 'true' && _encryption && ((0, App_1.env)("END_TO_END") === "true" ? true : object.data)
+    ? (0, App_1.decrypt)(object.data)
+    : object;
 exports.decode = decode;
 /**
  * custom response json encoder
@@ -46,7 +48,7 @@ class EncoderJSON {
         };
         this.decode = (object, encryption = true) => {
             var _a;
-            return (0, App_1.env)("APP_ENCRYPTION") === 'true' && encryption && object.data
+            return (0, App_1.env)("APP_ENCRYPTION") === 'true' && encryption && ((0, App_1.env)("END_TO_END") === "true" ? true : object.data)
                 ? (((_a = this.options) === null || _a === void 0 ? void 0 : _a.decrypt) ? this.options.decrypt(object.data) : (0, App_1.decrypt)(object.data))
                 : object;
         };
