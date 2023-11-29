@@ -33,6 +33,8 @@ class Application {
         var _a, _b, _c, _d, _e;
         try {
             const app = this.app = (0, express_1.default)();
+            if (this.options.trustProxy)
+                app.set("trust proxy", true);
             app.use((0, express_session_1.default)(((_a = this.options) === null || _a === void 0 ? void 0 : _a.session) || { secret: 'SessionSecret', resave: true, saveUninitialized: true }));
             app.use((0, cors_1.default)(((_b = this.options) === null || _b === void 0 ? void 0 : _b.cors) || { credentials: true, origin: '*' })).use(express_1.default.urlencoded({ extended: true })).use(express_1.default.json());
             this.useEngine(process.cwd());

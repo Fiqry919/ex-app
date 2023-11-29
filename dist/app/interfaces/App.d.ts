@@ -36,6 +36,10 @@ export interface AppOptions {
      *
      */
     mail?: SMTPOptions;
+    /**
+     *
+     */
+    trustProxy?: boolean;
 }
 /**
  * mail options
