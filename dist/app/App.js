@@ -112,14 +112,17 @@ exports.sleep = sleep;
 /**
  * Authenticate strategy
  */
-const Authenticate = (callback) => {
-    return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const Authenticate = (callback, cookie) => {
+    return (req, _, next) => __awaiter(void 0, void 0, void 0, function* () {
+        var _a, _b;
         try {
             const code = Exception_1.HttpStatus.UNAUTHORIZED;
-            const header = req.headers.authorization;
-            if (!header || header.split(" ").length !== 2)
+            let [_, token] = (_b = (_a = req.headers) === null || _a === void 0 ? void 0 : _a.authorization) === null || _b === void 0 ? void 0 : _b.split(' ');
+            if (!token && cookie)
+                token = req.cookies[typeof cookie === 'string' && cookie !== '' ? cookie : 'authorization'];
+            if (!token || token === '')
                 throw new Exception_1.Exception('Unauthorized', code);
-            const payload = jsonwebtoken_1.default.verify(header.split(" ")[1], (0, exports.env)("APP_KEY"), (e, payload) => {
+            const payload = jsonwebtoken_1.default.verify(token, (0, exports.env)("APP_KEY"), (e, payload) => {
                 if (e)
                     throw new Exception_1.Exception(e.message.replace("jwt", "session").capitalize(), code);
                 delete payload.iat;

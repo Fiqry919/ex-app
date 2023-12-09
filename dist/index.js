@@ -17,7 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseController = exports.Router = exports.Validator = exports.Mail = exports.Hash = exports.Application = void 0;
+exports.Socket = exports.BaseController = exports.Router = exports.Validator = exports.Mail = exports.Hash = exports.Application = void 0;
 const App_1 = __importDefault(require("./app/class/App"));
 exports.Application = App_1.default;
 const Controller_1 = __importDefault(require("./app/class/Controller"));
@@ -26,6 +26,8 @@ const Hash_1 = __importDefault(require("./app/class/Hash"));
 exports.Hash = Hash_1.default;
 const Mail_1 = __importDefault(require("./app/class/Mail"));
 exports.Mail = Mail_1.default;
+const Socket_1 = __importDefault(require("./app/class/Socket"));
+exports.Socket = Socket_1.default;
 const Route_1 = __importDefault(require("./app/Route"));
 exports.Router = Route_1.default;
 const privy_validator_1 = __importDefault(require("privy-validator"));

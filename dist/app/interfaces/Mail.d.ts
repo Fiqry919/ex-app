@@ -1,5 +1,7 @@
+import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
-export type MailOptions = SMTPTransport | SMTPTransport.Options;
+export type Transporter = nodemailer.Transporter<SMTPTransport.SentMessageInfo>;
+export type SMTPOptions = SMTPTransport | SMTPTransport.Options;
 export interface Template {
     view: string;
     compact: any;

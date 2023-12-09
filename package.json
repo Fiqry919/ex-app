@@ -26,7 +26,8 @@
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.7",
     "privy-validator": "^1.0.5",
-    "simple-aes-crypto": "^2.0.6"
+    "simple-aes-crypto": "^2.0.6",
+    "socket.io": "^4.7.2"
   },
   "devDependencies": {
     "@types/node": "^20.8.2",

@@ -20,6 +20,8 @@ const express_session_1 = __importDefault(require("express-session"));
 const App_1 = require("../interfaces/App");
 const Error_1 = require("../Error");
 const express_1 = __importDefault(require("express"));
+const http_1 = require("http");
+const Mail_1 = __importDefault(require("./Mail"));
 class Application {
     constructor(router, options) {
         this.router = router;
@@ -30,18 +32,21 @@ class Application {
      * Initialize application
      */
     init() {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f;
         try {
             const app = this.app = (0, express_1.default)();
+            this.server = new http_1.Server(app);
             if (this.options.trustProxy)
                 app.set("trust proxy", true);
-            app.use((0, express_session_1.default)(((_a = this.options) === null || _a === void 0 ? void 0 : _a.session) || { secret: 'SessionSecret', resave: true, saveUninitialized: true }));
+            app.use((0, express_session_1.default)(((_a = this.options) === null || _a === void 0 ? void 0 : _a.session) || { secret: 'SessionSecret', resave: false, saveUninitialized: false }));
             app.use((0, cors_1.default)(((_b = this.options) === null || _b === void 0 ? void 0 : _b.cors) || { credentials: true, origin: '*' })).use(express_1.default.urlencoded({ extended: true })).use(express_1.default.json());
             this.useEngine(process.cwd());
-            if ((_c = this.options) === null || _c === void 0 ? void 0 : _c.mail)
-                App_1.AppConfig.mail = this.options.mail;
-            if ((_d = this.options) === null || _d === void 0 ? void 0 : _d.providers)
-                (_e = this.options) === null || _e === void 0 ? void 0 : _e.providers.forEach(item => app.use(item));
+            if ((_c = this.options) === null || _c === void 0 ? void 0 : _c.socket)
+                this.options.socket.initialize(this.server);
+            if ((_d = this.options) === null || _d === void 0 ? void 0 : _d.smtpTransport)
+                Mail_1.default.initialize(this.options.smtpTransport);
+            if ((_e = this.options) === null || _e === void 0 ? void 0 : _e.providers)
+                (_f = this.options) === null || _f === void 0 ? void 0 : _f.providers.forEach(item => app.use(item));
             app.use(this.router).use(Error_1.ErrorHandler);
             console.clear();
         }
@@ -53,7 +58,7 @@ class Application {
      * Logging listener
      */
     listen(port) {
-        this.app.listen(port, () => __awaiter(this, void 0, void 0, function* () {
+        this.server.listen(port, () => __awaiter(this, void 0, void 0, function* () {
             var _a;
             console.log(`Timezone: ${chalk_1.default.cyan(Intl.DateTimeFormat().resolvedOptions().timeZone)}`);
             if ((_a = this.options) === null || _a === void 0 ? void 0 : _a.dataSource) {

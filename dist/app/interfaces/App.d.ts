@@ -1,8 +1,9 @@
 /// <reference types="node" />
-import SMTPTransport from "nodemailer/lib/smtp-transport";
 import { CorsOptions } from "cors";
 import { SessionOptions } from "express-session";
 import { DataSource } from "typeorm";
+import Socket from "../class/Socket";
+import { SMTPOptions } from "./Mail";
 export interface AppOptions {
     /**
      * Object Relation Mapping, now only support for typeorm
@@ -35,16 +36,16 @@ export interface AppOptions {
     /**
      *
      */
-    mail?: SMTPOptions;
+    smtpTransport?: SMTPOptions;
     /**
      *
      */
     trustProxy?: boolean;
+    /**
+     *
+     */
+    socket?: Socket;
 }
-/**
- * mail options
- */
-export type SMTPOptions = SMTPTransport | SMTPTransport.Options;
 /**
  * instance constructor type
  */

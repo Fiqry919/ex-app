@@ -2,6 +2,7 @@ import Application from './app/class/App';
 import BaseController from './app/class/Controller';
 import Hash from './app/class/Hash';
 import Mail from './app/class/Mail';
+import Socket from './app/class/Socket';
 import Router from './app/Route';
 import Validator from 'privy-validator';
 export * from './app/App';
@@ -45,5 +46,9 @@ Router,
 /**
  *
  */
-BaseController, };
+BaseController, 
+/**
+ *
+ */
+Socket };
 export default Application;

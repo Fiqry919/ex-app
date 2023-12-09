@@ -8,6 +8,10 @@ export default class Application {
      * Application
      */
     private app;
+    /**
+     * Server
+     */
+    private server;
     constructor(router: Router[], options?: AppOptions);
     /**
      * Initialize application

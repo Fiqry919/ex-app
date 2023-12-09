@@ -60,7 +60,7 @@ export declare const sleep: (second: number) => Promise<unknown>;
 /**
  * Authenticate strategy
  */
-export declare const Authenticate: (callback: AuthCallback) => (req: Request, res: Response, next: NextFunction) => Promise<any>;
+export declare const Authenticate: (callback: AuthCallback, cookie?: boolean | string) => (req: Request, _: Response, next: NextFunction) => Promise<any>;
 /**
  * Make hash
  * @returns string hash

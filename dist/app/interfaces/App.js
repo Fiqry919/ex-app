@@ -10,8 +10,4 @@ exports.AppConfig = {
      * default serve static
      */
     serveStatic: 'res/public',
-    /**
-     * default mail
-     */
-    mail: { /** undefined */}
 };
