@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.writeLog = exports.random = exports.hash_check = exports.hash = exports.Authenticate = exports.sleep = exports.generate = exports.decrypt = exports.encrypt = exports.aes = exports.error = exports.view = exports.json = exports.asset = exports.dir = exports.env = exports.isEmail = void 0;
+exports.writeLog = exports.random = exports.hash_check = exports.hash = exports.Authenticate = exports.sleep = exports.generateJwt = exports.decrypt = exports.encrypt = exports.aes = exports.error = exports.view = exports.json = exports.asset = exports.dir = exports.env = exports.isEmail = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const env_tracking_1 = __importDefault(require("env-tracking"));
@@ -102,8 +102,8 @@ exports.decrypt = decrypt;
  * Generate jsonwebtoken
  * @returns string
  */
-const generate = (payload, expiresIn) => jsonwebtoken_1.default.sign(payload, (0, exports.env)("APP_KEY"), expiresIn ? { expiresIn } : {});
-exports.generate = generate;
+const generateJwt = (payload, expiresIn) => jsonwebtoken_1.default.sign(payload, (0, exports.env)("APP_KEY"), expiresIn ? { expiresIn } : {});
+exports.generateJwt = generateJwt;
 /**
  * Delay execute time
  */
@@ -112,14 +112,14 @@ exports.sleep = sleep;
 /**
  * Authenticate strategy
  */
-const Authenticate = (callback, cookie) => {
+const Authenticate = (callback, cookie = true) => {
     return (req, _, next) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         try {
             const code = Exception_1.HttpStatus.UNAUTHORIZED;
-            let [_, token] = (_b = (_a = req.headers) === null || _a === void 0 ? void 0 : _a.authorization) === null || _b === void 0 ? void 0 : _b.split(' ');
+            let token = (_b = (_a = req.headers) === null || _a === void 0 ? void 0 : _a.authorization) === null || _b === void 0 ? void 0 : _b.split(' ')[1];
             if (!token && cookie)
-                token = req.cookies[typeof cookie === 'string' && cookie !== '' ? cookie : 'authorization'];
+                token = req.cookies[(typeof cookie === 'string' && cookie !== '') ? cookie : 'sid'];
             if (!token || token === '')
                 throw new Exception_1.Exception('Unauthorized', code);
             const payload = jsonwebtoken_1.default.verify(token, (0, exports.env)("APP_KEY"), (e, payload) => {

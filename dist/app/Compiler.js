@@ -63,6 +63,7 @@ Date.prototype.add = function (value, unit) {
     return this;
 };
 String.prototype.capitalize = function () { return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase(); };
+BigInt.prototype.toJSON = function () { return this.toString(); };
 Array.prototype.ObjectFilter = function (filter) {
     return this.map((item) => {
         if (typeof item === 'object' && item !== null) {

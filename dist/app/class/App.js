@@ -22,6 +22,7 @@ const Error_1 = require("../Error");
 const express_1 = __importDefault(require("express"));
 const http_1 = require("http");
 const Mail_1 = __importDefault(require("./Mail"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 class Application {
     constructor(router, options) {
         this.router = router;
@@ -38,7 +39,7 @@ class Application {
             this.server = new http_1.Server(app);
             if (this.options.trustProxy)
                 app.set("trust proxy", true);
-            app.use((0, express_session_1.default)(((_a = this.options) === null || _a === void 0 ? void 0 : _a.session) || { secret: 'SessionSecret', resave: false, saveUninitialized: false }));
+            app.use((0, express_session_1.default)(((_a = this.options) === null || _a === void 0 ? void 0 : _a.session) || { secret: 'SessionSecret', resave: false, saveUninitialized: false })).use((0, cookie_parser_1.default)());
             app.use((0, cors_1.default)(((_b = this.options) === null || _b === void 0 ? void 0 : _b.cors) || { credentials: true, origin: '*' })).use(express_1.default.urlencoded({ extended: true })).use(express_1.default.json());
             this.useEngine(process.cwd());
             if ((_c = this.options) === null || _c === void 0 ? void 0 : _c.socket)

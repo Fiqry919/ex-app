@@ -18,6 +18,9 @@ declare global {
          */
         add(value: number, unit: UnitDate): Date;
     }
+    interface BigInt {
+        toJSON(): string;
+    }
     interface Array<T> {
         /**
          * Removing specific key from Array object

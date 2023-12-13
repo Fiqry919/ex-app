@@ -52,7 +52,7 @@ export declare const decrypt: (encrypted: string) => any;
  * Generate jsonwebtoken
  * @returns string
  */
-export declare const generate: (payload: any, expiresIn?: string | number) => string;
+export declare const generateJwt: (payload: any, expiresIn?: string | number) => string;
 /**
  * Delay execute time
  */
