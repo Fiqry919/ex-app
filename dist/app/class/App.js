@@ -13,16 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require("../Compiler");
+const fs_1 = __importDefault(require("fs"));
 const cors_1 = __importDefault(require("cors"));
-const chalk_1 = __importDefault(require("chalk"));
 const path_1 = __importDefault(require("path"));
+const Mail_1 = __importDefault(require("./Mail"));
+const chalk_1 = __importDefault(require("chalk"));
 const express_session_1 = __importDefault(require("express-session"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const App_1 = require("../interfaces/App");
 const Error_1 = require("../Error");
 const express_1 = __importDefault(require("express"));
 const http_1 = require("http");
-const Mail_1 = __importDefault(require("./Mail"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
 class Application {
     constructor(router, options) {
         this.router = router;
@@ -80,11 +81,25 @@ class Application {
         const serveStatic = (_b = this.options) === null || _b === void 0 ? void 0 : _b.serveStatic;
         if (viewEngine) {
             const configEngine = typeof viewEngine === 'string' ? App_1.AppConfig.viewEngine = viewEngine : 'res/views';
-            this.app.set('view engine', 'ejs').set('views', path_1.default.join(directory, configEngine));
+            const view_directory = path_1.default.join(directory, configEngine);
+            try {
+                fs_1.default.readdirSync(view_directory, { withFileTypes: true });
+            }
+            catch (e) {
+                fs_1.default.mkdirSync(view_directory, { recursive: true });
+            }
+            this.app.set('view engine', 'ejs').set('views', view_directory);
         }
         if (serveStatic) {
             const configStatic = typeof serveStatic === 'string' ? App_1.AppConfig.serveStatic = serveStatic : 'res/public';
-            this.app.use('/public', express_1.default.static(path_1.default.join(directory, configStatic)));
+            const static_directory = path_1.default.join(directory, configStatic);
+            try {
+                fs_1.default.readdirSync(static_directory, { withFileTypes: true });
+            }
+            catch (e) {
+                fs_1.default.mkdirSync(static_directory, { recursive: true });
+            }
+            this.app.use('/public', express_1.default.static(static_directory));
         }
     }
 }
