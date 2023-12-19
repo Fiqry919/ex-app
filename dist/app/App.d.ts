@@ -60,23 +60,15 @@ export declare const sleep: (second: number) => Promise<unknown>;
 /**
  * Authenticate strategy
  */
-export declare const Authenticate: (callback: AuthCallback, cookie?: boolean | string) => (req: Request, _: Response, next: NextFunction) => Promise<any>;
+export declare function Authenticate(callback: AuthCallback, cookie: boolean | string): (req: Request, response: Response, next: NextFunction) => Promise<any>;
+export declare function Authenticate(callback: AuthCallback, cookie: boolean | string): (req: Request, next: NextFunction) => Promise<any>;
 /**
- * Make hash
- * @returns string hash
- */
-export declare const hash: (i: string, l?: number) => string;
-/**
- * Validate hash
- * @returns boolean
- */
-export declare const hash_check: (i: string, h: string, l?: number) => boolean;
-/**
- * Generate random
+ * Generate random string or number
  * @param length number
  * @param type String | Number | Buffer
+ * @param encoding buffer encoding with default hex, this can apply only when type buffer.
  */
-export declare const random: (length: number, type?: TypeConstructor) => any;
+export declare const random: (length: number, type?: TypeConstructor, encoding?: BufferEncoding) => string | number;
 /**
  * Make a log file
  * @param file full path filename

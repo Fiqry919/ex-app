@@ -12,14 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.writeLog = exports.random = exports.hash_check = exports.hash = exports.Authenticate = exports.sleep = exports.generateJwt = exports.decrypt = exports.encrypt = exports.aes = exports.error = exports.view = exports.json = exports.asset = exports.dir = exports.env = exports.isEmail = void 0;
+exports.writeLog = exports.random = exports.Authenticate = exports.sleep = exports.generateJwt = exports.decrypt = exports.encrypt = exports.aes = exports.error = exports.view = exports.json = exports.asset = exports.dir = exports.env = exports.isEmail = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const env_tracking_1 = __importDefault(require("env-tracking"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const simple_aes_crypto_1 = __importDefault(require("simple-aes-crypto"));
 const Response_1 = require("./Response");
-const crypto_1 = require("crypto");
 const Exception_1 = require("./Exception");
 const App_1 = require("./interfaces/App");
 var validator_1 = require("privy-validator/dist/common/validator");
@@ -109,11 +108,8 @@ exports.generateJwt = generateJwt;
  */
 const sleep = (second) => __awaiter(void 0, void 0, void 0, function* () { return yield new Promise(f => setTimeout(f, (second * 1000))); });
 exports.sleep = sleep;
-/**
- * Authenticate strategy
- */
-const Authenticate = (callback, cookie = true) => {
-    return (req, _, next) => __awaiter(void 0, void 0, void 0, function* () {
+function Authenticate(callback, cookie = true) {
+    return (req, _, next) => __awaiter(this, void 0, void 0, function* () {
         var _a, _b;
         try {
             const code = Exception_1.HttpStatus.UNAUTHORIZED;
@@ -141,29 +137,15 @@ const Authenticate = (callback, cookie = true) => {
             return yield callback(Exception_1.Exception.parse(e));
         }
     });
-};
+}
 exports.Authenticate = Authenticate;
 /**
- * Make hash
- * @returns string hash
- */
-const hash = (i, l = 16) => {
-    const bytes = (0, crypto_1.randomBytes)(Math.ceil(l / 2)).toString('hex').slice(0, l);
-    return bytes + (0, crypto_1.createHash)('sha256').update(i + bytes).digest('hex');
-};
-exports.hash = hash;
-/**
- * Validate hash
- * @returns boolean
- */
-const hash_check = (i, h, l = 16) => (0, crypto_1.createHash)('sha256').update(i + h.slice(0, l)).digest('hex') === h.slice(l);
-exports.hash_check = hash_check;
-/**
- * Generate random
+ * Generate random string or number
  * @param length number
  * @param type String | Number | Buffer
+ * @param encoding buffer encoding with default hex, this can apply only when type buffer.
  */
-const random = (length, type = Buffer) => {
+const random = (length, type = Buffer, encoding) => {
     if (type !== String && type !== Number && type !== Buffer)
         throw new Error("Invalid argument of type");
     const size = type === Buffer ? (length / 2) : length;
@@ -171,7 +153,7 @@ const random = (length, type = Buffer) => {
     let result = '';
     for (let i = 0; i < size; i++)
         result += characters.charAt(Math.floor(Math.random() * characters.length));
-    return type === String ? result : type === Number ? parseInt(result) : Buffer.from(result).toString('hex');
+    return type === String ? result : type === Number ? parseInt(result) : Buffer.from(result).toString(encoding || 'hex');
 };
 exports.random = random;
 /**
