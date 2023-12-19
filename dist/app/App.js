@@ -109,9 +109,11 @@ exports.generateJwt = generateJwt;
 const sleep = (second) => __awaiter(void 0, void 0, void 0, function* () { return yield new Promise(f => setTimeout(f, (second * 1000))); });
 exports.sleep = sleep;
 function Authenticate(callback, cookie = true) {
-    return (req, _, next) => __awaiter(this, void 0, void 0, function* () {
+    return (req, res, next) => __awaiter(this, void 0, void 0, function* () {
         var _a, _b;
         try {
+            if (typeof res === 'function')
+                next = res;
             const code = Exception_1.HttpStatus.UNAUTHORIZED;
             let token = (_b = (_a = req.headers) === null || _a === void 0 ? void 0 : _a.authorization) === null || _b === void 0 ? void 0 : _b.split(' ')[1];
             if (!token && cookie)
