@@ -60,8 +60,7 @@ export declare const sleep: (second: number) => Promise<unknown>;
 /**
  * Authenticate strategy
  */
-export declare function Authenticate(callback: AuthCallback, cookie?: boolean | string): (req: Request, response: Response, next: NextFunction) => Promise<any>;
-export declare function Authenticate(callback: AuthCallback, cookie?: boolean | string): (req: Request, next: NextFunction) => Promise<any>;
+export declare function Authenticate(callback: AuthCallback, cookie?: boolean | string): (req: Request, res: Response | NextFunction, next?: NextFunction) => Promise<any>;
 /**
  * Generate random string or number
  * @param length number

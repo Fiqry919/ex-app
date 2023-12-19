@@ -108,6 +108,9 @@ exports.generateJwt = generateJwt;
  */
 const sleep = (second) => __awaiter(void 0, void 0, void 0, function* () { return yield new Promise(f => setTimeout(f, (second * 1000))); });
 exports.sleep = sleep;
+/**
+ * Authenticate strategy
+ */
 function Authenticate(callback, cookie = true) {
     return (req, res, next) => __awaiter(this, void 0, void 0, function* () {
         var _a, _b;
