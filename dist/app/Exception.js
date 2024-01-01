@@ -20,4 +20,6 @@ const StackTrace = process.env.NODE_ENV === 'development';
  * when `NODE_ENV=development` show message with error stack
  * @returns Exception
  */
-exports.Exception.parse = (e, trace = StackTrace) => e instanceof exports.Exception ? e : new exports.Exception(trace ? e.stack : e.message, HttpStatus_1.HttpStatus.SERVER_ERROR);
+exports.Exception.parse = (e, trace = StackTrace) => e instanceof exports.Exception ? e
+    : new exports.Exception(trace ? e.stack
+        : e.message, HttpStatus_1.HttpStatus.SERVER_ERROR);

@@ -1,5 +1,5 @@
 import { UnitDate } from "./interfaces/Compiler";
-import { CustomMessage, ValidationSchema } from "privy-validator/dist/interfaces/validator";
+import { HttpStatus } from "./Exception";
 declare global {
     interface String {
         /**
@@ -27,6 +27,12 @@ declare global {
          */
         ObjectFilter(filter: string[]): T[];
     }
+    class Exception extends Error {
+        status: boolean;
+        code: number;
+        constructor(message: any, code?: HttpStatus, status?: boolean);
+        static parse(e: unknown, trace?: boolean): Exception;
+    }
 }
 declare module 'express' {
     interface Request {
@@ -35,12 +41,5 @@ declare module 'express' {
          * Getting request body or if empty request query
          */
         data?: () => any;
-        /**
-         * validate request body or query
-         */
-        validate?: (schema: ValidationSchema, message?: CustomMessage) => Promise<any>;
     }
 }
-/**
- * Typeorm define
- */

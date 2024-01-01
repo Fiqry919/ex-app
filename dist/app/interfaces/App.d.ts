@@ -1,9 +1,10 @@
 /// <reference types="node" />
-import { CorsOptions } from "cors";
-import { SessionOptions } from "express-session";
-import { DataSource } from "typeorm";
 import Socket from "../class/Socket";
+import { CorsOptions } from "cors";
+import { DataSource } from "typeorm";
 import { SMTPOptions } from "./Mail";
+import { SessionOptions } from "express-session";
+import { LogOptions } from "./Log";
 export interface AppOptions {
     /**
      * Object Relation Mapping, now only support for typeorm
@@ -45,6 +46,10 @@ export interface AppOptions {
      *
      */
     socket?: Socket;
+    /**
+     *
+     */
+    log?: boolean | LogOptions;
 }
 /**
  * instance constructor type

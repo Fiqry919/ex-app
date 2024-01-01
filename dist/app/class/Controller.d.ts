@@ -3,5 +3,5 @@ export default abstract class Controller {
     /**
      * Instance validator
      */
-    validate: (data: any, schema: ValidationSchema, message?: CustomMessage) => Promise<void>;
+    validate: <T = any>(data: any, schema: ValidationSchema<T>, message?: CustomMessage<T>) => Promise<void>;
 }

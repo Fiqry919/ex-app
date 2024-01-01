@@ -1,6 +1,6 @@
 import '../Compiler';
-import { AppOptions } from '../interfaces/App';
 import { Router } from "express";
+import { AppOptions } from '../interfaces/App';
 export default class Application {
     private router;
     private options?;
