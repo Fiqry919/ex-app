@@ -16,15 +16,17 @@ require("../Compiler");
 const fs_1 = __importDefault(require("fs"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
+const Log_1 = __importDefault(require("../Log"));
 const Mail_1 = __importDefault(require("./Mail"));
 const chalk_1 = __importDefault(require("chalk"));
-const morgan_1 = __importDefault(require("morgan"));
 const express_1 = __importDefault(require("express"));
+const Timeout_1 = __importDefault(require("../Timeout"));
 const express_session_1 = __importDefault(require("express-session"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const http_1 = require("http");
 const Error_1 = require("../Error");
 const App_1 = require("../interfaces/App");
+const Socket_1 = __importDefault(require("./Socket"));
 class Application {
     constructor(router, options) {
         this.router = router;
@@ -44,13 +46,8 @@ class Application {
             app.use((0, express_session_1.default)(((_a = this.options) === null || _a === void 0 ? void 0 : _a.session) || { secret: 'SessionSecret', resave: false, saveUninitialized: false })).use((0, cookie_parser_1.default)());
             app.use((0, cors_1.default)(((_b = this.options) === null || _b === void 0 ? void 0 : _b.cors) || { credentials: true, origin: '*' })).use(express_1.default.urlencoded({ extended: true })).use(express_1.default.json());
             this.useEngine(process.cwd());
-            if (this.options.log) {
-                app.use(typeof this.options.log === 'boolean'
-                    ? (0, morgan_1.default)('combined')
-                    : (0, morgan_1.default)(this.options.log.format, this.options.log.options));
-            }
             if ((_c = this.options) === null || _c === void 0 ? void 0 : _c.socket) {
-                this.options.socket.initialize(this.server);
+                Socket_1.default.initialize(this.server, this.options.socket);
             }
             if ((_d = this.options) === null || _d === void 0 ? void 0 : _d.smtpTransport) {
                 Mail_1.default.initialize(this.options.smtpTransport);
@@ -58,6 +55,8 @@ class Application {
             if ((_e = this.options) === null || _e === void 0 ? void 0 : _e.providers) {
                 (_f = this.options) === null || _f === void 0 ? void 0 : _f.providers.forEach(item => app.use(item));
             }
+            app.use((0, Log_1.default)(this.options.log));
+            app.use((0, Timeout_1.default)(this.options.timeout));
             app.use(this.router).use(Error_1.ErrorHandler);
             console.clear();
         }

@@ -1,10 +1,11 @@
 /// <reference types="node" />
-import Socket from "../class/Socket";
 import { CorsOptions } from "cors";
 import { DataSource } from "typeorm";
 import { SMTPOptions } from "./Mail";
 import { SessionOptions } from "express-session";
 import { LogOptions } from "./Log";
+import { TimeoutOptions } from "./Timeout";
+import { ServerOptions } from "socket.io";
 export interface AppOptions {
     /**
      * Object Relation Mapping, now only support for typeorm
@@ -45,11 +46,16 @@ export interface AppOptions {
     /**
      *
      */
-    socket?: Socket;
+    socket?: Partial<ServerOptions>;
     /**
      *
      */
     log?: boolean | LogOptions;
+    /**
+     * request timeout
+     * @default 5 second
+     */
+    timeout?: boolean | number | TimeoutOptions;
 }
 /**
  * instance constructor type

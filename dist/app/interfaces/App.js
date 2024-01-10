@@ -10,4 +10,8 @@ exports.AppConfig = {
      * default serve static
      */
     serveStatic: 'res/public',
+    /**
+     * default timeout 5s
+     */
+    timeout: 500000
 };

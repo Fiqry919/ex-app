@@ -1,17 +1,18 @@
 import { Server as HttpServer } from "http";
 import { Server, ServerOptions } from "socket.io";
 declare class Socket {
-    private options;
-    private initialized;
-    connection: Server;
-    constructor(options: Partial<ServerOptions>);
+    private static initialized;
+    static connection: Server;
+    /**
+     * direct to static method
+     */
     /**
      * Initialize socket server
      */
-    initialize: (server: HttpServer) => this;
+    static initialize: (server: HttpServer, options: Partial<ServerOptions>) => typeof Socket;
     /**
      * Need fixed and change to public method
      */
-    private createChannel;
+    private static createChannel;
 }
 export default Socket;
