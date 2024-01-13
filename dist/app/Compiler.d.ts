@@ -1,5 +1,5 @@
 import { UnitDate } from "./interfaces/Compiler";
-import { HttpStatus } from "./Exception";
+import { ExceptionConstructor } from "./Exception";
 declare global {
     interface String {
         /**
@@ -27,12 +27,7 @@ declare global {
          */
         ObjectFilter(filter: string[]): T[];
     }
-    class Exception extends Error {
-        status: boolean;
-        code: number;
-        constructor(message: any, code?: HttpStatus, status?: boolean);
-        static parse(e: unknown, trace?: boolean): Exception;
-    }
+    var Exception: ExceptionConstructor;
 }
 declare module 'express' {
     interface Request {

@@ -18,19 +18,6 @@ Object.defineProperty(Date.prototype, 'format', {
     },
     writable: true, enumerable: false, configurable: true,
 });
-class Exception extends Error {
-    constructor(message, code = Exception_1.HttpStatus.SERVER_ERROR, status = false) {
-        super(message);
-        this.status = status;
-        this.code = code;
-    }
-    static parse(e, trace) {
-        return e instanceof Exception ? e
-            : new Exception(trace ? e.stack
-                : e.message, Exception_1.HttpStatus.SERVER_ERROR);
-    }
-}
-;
 Date.prototype.add = function (value, unit) {
     switch (unit) {
         case 'seconds':
@@ -70,6 +57,18 @@ Array.prototype.ObjectFilter = function (filter) {
             return item;
     });
 };
+/**
+ * Exception
+ */
+global.Exception = function (message, code, status) {
+    this.status = status || false;
+    this.code = code || Exception_1.HttpStatus.SERVER_ERROR;
+    this.message = message;
+};
+const StackTrace = process.env.NODE_ENV === 'development';
+global.Exception.parse = (e, trace = StackTrace) => e instanceof Exception_1.Exception ? e
+    : new Exception_1.Exception(trace ? e.stack
+        : e.message, Exception_1.HttpStatus.SERVER_ERROR);
 /**
  * Express define
  */
